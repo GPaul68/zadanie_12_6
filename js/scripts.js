@@ -1,22 +1,16 @@
-var url = 'http:/api.icndb.com/jokes/random';
+var url = 'https://restcountries.eu/rest/v1/name/';
+var countriesList = $('#countries');
 
-var button = document.getElementById('get-joke');
-button.addEventListener('click', function(){
-    getJoke();
-});
-
-var paragraph = document.getElementById('joke');
-
-function getJoke() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.addEventListener('load', function(){
-        var response = JSON.parse(xhr.response);
-        paragraph.innerHTML = response.value.joke;
+function searchCountries() {
+    var countryName = $('#country-name').val();
+    if(!countryName.length) countryName = 'Poland';
+    $.ajax({
+        url: url + countryName,
+        method: 'GET',
+        success: showCountriesList
     });
-    xhr.send();
 }
 
-window.addEventListener('load', function() {
-    getJoke();
-});
+function showCountriesList(resp) {
+    countriesList.empty();
+}
